@@ -38,7 +38,12 @@ app.use((req, res, next) => {
   res.status(404).render("404");
 });
 
+// Connect to database for serverless environments
+connectDB();
+
 app.listen(3000, () => {
-  connectDB();
   console.log(`Example app listening on port 3000`);
 });
+
+// Export the app for Vercel Serverless Functions
+module.exports = app;

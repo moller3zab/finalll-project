@@ -351,21 +351,60 @@ body {
 @media (max-width: 768px) {
   .search-container {
     flex-direction: column;
-    background: none;
-    backdrop-filter: none;
-    box-shadow: none;
-    border: none;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 15px;
   }
   .search-input, .location-select, .search-btn {
     width: 100%;
-    margin: 5px 0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin: 8px 0;
+    box-sizing: border-box;
   }
   .options {
     flex-direction: column;
     align-items: center;
   }
+  .option {
+    width: 100%;
+    max-width: 320px;
+  }
   .main-content h1 {
-    font-size: 40px;
+    font-size: 32px;
+  }
+  .main-content > p {
+    font-size: 16px;
+  }
+  
+  /* Order Online Mobile Tweaks */
+  .order-online-section {
+    padding: 40px 15px;
+  }
+  .section-title {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  .section-title .highlight {
+    font-size: 34px;
+  }
+  .modern-card {
+    width: 100%;
+    max-width: 350px;
+    padding: 30px 20px;
+  }
+  .discount-section {
+    padding: 30px 20px;
+    margin-top: 50px;
+    text-align: center;
+  }
+  .discount-title {
+    font-size: 26px;
+  }
+  .discount-desc {
+    font-size: 16px;
+  }
+  .discount-section::after {
+    font-size: 100px;
+    right: -10px;
+    bottom: -20px;
   }
 }

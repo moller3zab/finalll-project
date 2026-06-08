@@ -19,6 +19,14 @@ router.get("/aboutus", (req, res) => {
   res.render("./aboutus", { title: "About us" });
 });
 
+router.get("/contactus", (req, res) => {
+  res.render("./contactus", { title: "Contact Us" });
+});
+
+router.get("/forgot-password", (req, res) => {
+  res.render("./forgot-password", { title: "Forgot Password" });
+});
+
 router.get("/signin", (req, res) => {
   res.render("./signin", { title: "Sign in" });
 });

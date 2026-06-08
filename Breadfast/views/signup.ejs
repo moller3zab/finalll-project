@@ -3,17 +3,98 @@
   <%- include("./components/headTag.ejs") %>
   <head>
     <style>
-      body::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+      
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(-45deg, #f3e5ff, #e6f0ff, #ffffff, #f9f2ff);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .auth-container {
+        animation: slideUpFade 0.6s ease-out forwards;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 24px;
+        box-shadow: 0 15px 35px rgba(155, 49, 249, 0.1);
+        border: 1px solid rgba(255,255,255,0.8);
+        padding: 40px;
         width: 100%;
-        height: 115%;
-        background-image: url("../img/loginBG.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
-        z-index: -1;
+        max-width: 600px;
+      }
+
+      @keyframes slideUpFade {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h1 {
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 30px;
+      }
+
+      .form-label {
+        font-weight: 500;
+        color: #555;
+      }
+
+      .form-control {
+        border-radius: 12px;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        transition: all 0.3s;
+      }
+
+      .form-control:focus {
+        border-color: #9b31f9;
+        box-shadow: 0 0 0 4px rgba(155, 49, 249, 0.1);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #9b31f9, #7000cc);
+        border: none;
+        border-radius: 12px;
+        padding: 12px 30px;
+        font-weight: 600;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(155, 49, 249, 0.3);
+      }
+
+      .btn-secondary {
+        border-radius: 12px;
+        padding: 12px 30px;
+        font-weight: 600;
+      }
+      
+      a {
+        color: #9b31f9;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+      
+      a:hover {
+        color: #7000cc;
+        text-decoration: underline;
       }
     </style>
   </head>
@@ -21,12 +102,13 @@
     <%- include("./components/navbar.ejs") %>
     <div
       class="d-flex justify-content-center align-items-center"
-      style="min-height: 100vh"
+      style="min-height: calc(100vh - 80px);"
     >
-      <div class="container bg-white p-4 m-5 rounded" style="width: 600px">
+      <div class="auth-container m-3">
         <form id="signupForm" style="color: black">
           <h1 class="text-center">Sign up</h1>
-          <!-- First Name Field -->
+          
+          <!-- First & Last Name Fields -->
           <div class="row">
             <div class="mb-3 col-6">
               <label for="firstName" class="form-label">First Name</label>
@@ -37,8 +119,6 @@
                 placeholder="Enter your first name"
               />
             </div>
-
-            <!-- Last Name Field -->
             <div class="mb-3 col-6">
               <label for="lastName" class="form-label">Last Name</label>
               <input
@@ -59,7 +139,7 @@
               id="email"
               placeholder="Enter your email"
             />
-            <div id="emailHelp" class="form-text">
+            <div id="emailHelp" class="form-text mt-2" style="color: #888;">
               We'll never share your email with anyone else.
             </div>
           </div>
@@ -76,10 +156,8 @@
           </div>
 
           <!-- Confirm Password Field -->
-          <div class="mb-3">
-            <label for="confirmPassword" class="form-label"
-              >Confirm Password</label
-            >
+          <div class="mb-4">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
             <input
               type="password"
               class="form-control"
@@ -90,33 +168,33 @@
 
           <!-- Buttons -->
           <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">Sign Up</button>
-            <button type="button" class="btn btn-secondary">Cancel</button>
+            <button type="submit" class="btn btn-primary w-100 me-2">Sign Up</button>
+            <button type="button" class="btn btn-secondary w-100 ms-2" onclick="window.location.href='/'">Cancel</button>
+          </div>
+          
+          <div class="mt-4 text-center">
+            <p style="color: #666;">Already have an account? <a href="/signin">Sign in</a></p>
           </div>
         </form>
       </div>
     </div>
 
     <script type="module">
-      // Add an event listener for the form submission
       import Toastify from "./js/toastify.js";
 
       document
         .getElementById("signupForm")
         .addEventListener("submit", async (event) => {
-          event.preventDefault(); // Prevent the default form submission
+          event.preventDefault();
 
-          // Collecting the form data
           const firstName = document.getElementById("firstName").value;
           const lastName = document.getElementById("lastName").value;
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
-          const confirmPassword =
-            document.getElementById("confirmPassword").value;
+          const confirmPassword = document.getElementById("confirmPassword").value;
 
           let valid = true;
 
-          // Validation checks
           if (firstName.trim() === "") {
             valid = false;
             return Toastify("First Name is required.", "red");
@@ -140,10 +218,7 @@
             return Toastify("Password is required.", "red");
           } else if (password.length < 6) {
             valid = false;
-            return Toastify(
-              "Password must be at least 6 characters long.",
-              "red"
-            );
+            return Toastify("Password must be at least 6 characters long.", "red");
           }
 
           if (confirmPassword.trim() === "") {
